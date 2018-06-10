@@ -1,0 +1,17 @@
+{
+  "name": "bc-core",
+  "version": "1.0.0",
+  "description": "contain alls core functionalities required by the hmi and mobile app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "iota.lib.js": "^0.4.7",
+    "mam.client.js": "github:iotaledger/mam.client.js",
+    "rxjs": "^6.2.0",
+    "uuid": "^3.2.1"
+  }
+}
