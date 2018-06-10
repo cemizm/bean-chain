@@ -66,3 +66,6 @@ typings/
 # Serverless directories
 .serverless
 package-lock.json
+
+# IDEA projects
+/.idea
