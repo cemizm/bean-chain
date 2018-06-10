@@ -1,30 +1,51 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron');
+const Splashscreen = require('@trodi/electron-splashscreen');
+const PaymentController = require('./backend/payment.controller');
 
-const SEED = "L9TIGNCGZUMZAKOHAVUZIIDBAYPFYEKCIIZMVPJGEUOEEWFEEERWBHWYWLLMDSXBUKIUG9ZKMY9GR9DXB";
+let controller = new PaymentController("L9TIGNCGU9MZAKOHAVUZIIDBAYPFYEKCIIZMVPJGEUOEEWFEEERWBHWYWLLMDSXBUKIUG9ZKMY9GR9DXB", "https://cvnode.codeworx.de:443");
 
-const core = require('bc-core');
+let cfg = {
+  kiosk:false,
+  width: 800,
+  height: 480
+};
 
-let svcIota = new core.services.iota("https://cvnode.codeworx.de:443");
+var win;
 
-let win;
-let address;
-let index = 0;
+function initialize() {
+  const config = {
+    windowOpts: cfg,
+    templateUrl: `${__dirname}/splash-screen.html`,
+    splashScreenOpts: {
+        width: 300,
+        height: 300,
+        transparent: true,
+    },
+  };
+  win = Splashscreen.initSplashScreen(config);
+}
 
-function createWindow () {
-  win = new BrowserWindow({
-    kiosk:false,
-    width: 800,
-    height: 480
-  })
-
+function initMain(){
+  console.log("initMain")
   win.loadURL(`file://${__dirname}/dist/hmi/index.html`)
-
   win.on('closed', function () {
     win = null
   })
 }
 
-app.on('ready', createWindow)
+function createWindow () {
+  console.log("createWindow")
+  cfg.show=true;
+  win = new BrowserWindow(cfg)
+  initMain();
+}
+
+app.on('ready', async () => {
+  console.log("ready")
+  initialize();
+  await controller.initialize();
+  initMain();
+});
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
@@ -33,45 +54,19 @@ app.on('window-all-closed', function () {
 })
 
 app.on('activate', function () {
+  console.log("activate")
   if (win === null) {
     createWindow()
   }
 })
 
 ipcMain.on('getAddress', async (event, arg) =>{
-  event.sender.send("address", address);
+  event.sender.send("address", controller.address);
 });
 
-async function updateAddress() {
-  let addresses = await svcIota.getNewAddress(SEED, { checksum: true, index: index, returnAll:true });
-  let temp = addresses.pop();
-  if(temp == address)
-    return;
-
-  index += addresses.length + 1;
-  address = temp;
-
+controller.addressUpdated.subscribe((address) => {
   if(win)
     win.webContents.send("address", address);
 
   console.log("new address:" + address);
-}
-
-async function getTransactions() {
-  var transactions = await svcIota.findTransactionObjects({ addresses: [address] });
-  if(transactions.length > 0){
-    transaction = transactions[0]
-    console.log("new tx:" + transaction.value);
-    // check value and send message to analytics channel..
-
-    await updateAddress();
-  }
-  setTimeout(getTransactions, 5000);
-}
-
-async function init(){
-  await updateAddress();
-  await getTransactions();
-}
-
-init();
+});

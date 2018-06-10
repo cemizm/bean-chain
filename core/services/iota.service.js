@@ -57,4 +57,26 @@ module.exports = class IotaService {
       });
     });
   }
+
+  decodeTransactions(transactions) {
+    let transaction = transactions[0]
+    transactions.sort((a,b)=>{
+      if(a.currentIndex < b.currentIndex)
+        return -1;
+
+      if(a.currentIndex > b.currentIndex)
+        return 1;
+
+      return 0;
+    });
+    var message = "";
+    transactions.forEach(t => { message += t.signatureMessageFragment })
+    message = message.replace(/9*$/, '');
+    if(!message)
+      return {transaction, message};
+
+    message = this.iota.utils.fromTrytes(message);
+
+    return {transaction, message};
+  }
 }
