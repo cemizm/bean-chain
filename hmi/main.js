@@ -8,6 +8,7 @@ let svcIota = new core.services.iota("https://cvnode.codeworx.de:443");
 
 let win;
 let address;
+let index = 0;
 
 function createWindow () {
   win = new BrowserWindow({
@@ -41,23 +42,36 @@ ipcMain.on('getAddress', async (event, arg) =>{
   event.sender.send("address", address);
 });
 
-async function init(){
-  address = await svcIota.getNewAddress(SEED, { checksum: true });
+async function updateAddress() {
+  let addresses = await svcIota.getNewAddress(SEED, { checksum: true, index: index, returnAll:true });
+  let temp = addresses.pop();
+  if(temp == address)
+    return;
+
+  index += addresses.length + 1;
+  address = temp;
+
   if(win)
     win.webContents.send("address", address);
 
-  setInterval(async () => {
-    var transactions = await svcIota.findTransactionObjects({ addresses: [address] });
-    if(transactions.length > 0){
-      transaction = transactions[0]
+  console.log("new address:" + address);
+}
 
-      // check value and send message to analytics channel..
+async function getTransactions() {
+  var transactions = await svcIota.findTransactionObjects({ addresses: [address] });
+  if(transactions.length > 0){
+    transaction = transactions[0]
+    console.log("new tx:" + transaction.value);
+    // check value and send message to analytics channel..
 
-      address = await svcIota.getNewAddress(SEED, { checksum: true });
-      if(win)
-        win.webContents.send("address", address);
-    }
-  }, 5000);
+    await updateAddress();
+  }
+  setTimeout(getTransactions, 5000);
+}
+
+async function init(){
+  await updateAddress();
+  await getTransactions();
 }
 
 init();
