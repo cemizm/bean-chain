@@ -1,3 +1,4 @@
 module.exports = {
-  services: require('./services/index.js'),
+  services: require('./services/index'),
+  interfaces: require('./interfaces/index')
 }
