@@ -1,0 +1,64 @@
+dir = certificates
+
+[ ca ]
+default_ca = CA_default
+
+[ CA_default ]
+serial = $dir/serial
+database = $dir/index.txt
+new_certs_dir = $dir/newcerts
+certificate  = ../config/certs/ca/cert.pem
+private_key = ../config/certs/ca/private.key
+default_days = 36500
+default_md  = sha256
+preserve = no
+email_in_dn  = no
+nameopt = default_ca
+certopt = default_ca
+policy = policy_match
+
+[ policy_match ]
+commonName = supplied
+countryName = optional
+stateOrProvinceName = optional
+organizationName = optional
+organizationalUnitName = optional
+emailAddress = optional
+
+[ req ]
+default_bits = 2048
+default_keyfile = priv.pem
+default_md = sha256
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+encyrpt_key = no
+
+[ req_distinguished_name ]
+countryName                     = Land
+countryName_default             = DE
+countryName_min                 = 2
+countryName_max                 = 2
+
+stateOrProvinceName             = Bundesland
+stateOrProvinceName_default     = NRW
+
+localityName                    = Stadt
+localityName_default            = Bielefeld
+
+organizationName                = Organization
+organizationName_default        = mainorg.bean-chain.org
+
+organizationalUnitName          = Machine, Administrator
+organizationalUnitName_default  = Machine
+
+commonName                      = Benutzername oder Geräteid
+commonName_default              = Cem Basoglu
+
+[ v3_ca ]
+keyUsage = critical, digitalSignature
+basicConstraints = critical, CA:FALSE
+authorityKeyIdentifier = keyid:always
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+subjectKeyIdentifier = hash
