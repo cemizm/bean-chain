@@ -11,6 +11,7 @@
   "dependencies": {
     "iota.lib.js": "^0.4.7",
     "mam.client.js": "github:iotaledger/mam.client.js",
+    "nfc": "^0.3.3",
     "rxjs": "^6.2.0",
     "serialport": "^6.2.0",
     "uuid": "^3.2.1"
