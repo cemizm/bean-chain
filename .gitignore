@@ -69,3 +69,4 @@ package-lock.json
 
 # IDEA projects
 /.idea
+hfc-key-store

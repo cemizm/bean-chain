@@ -48,7 +48,7 @@ localityName_default            = Bielefeld
 organizationName                = Organization
 organizationName_default        = mainorg.bean-chain.org
 
-organizationalUnitName          = Machine, Administrator
+organizationalUnitName          = Machine, Manager, User
 organizationalUnitName_default  = Machine
 
 commonName                      = Benutzername oder Geräteid
