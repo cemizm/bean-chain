@@ -90,6 +90,8 @@ scanner.on('beacon', async (beacon) => {
         let account = await client.account_get(id);
         if(account == null)
             return;
+
+        console.log(account);
         
         state.id = id;
         state.account = account;
