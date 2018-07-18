@@ -16,7 +16,7 @@ gulp.task('chaincode.update', async (cb) =>{
 
     let client = await Hyperledger.initFromConfig(config);
     try {
-        let response = await client.autoUpgradeChaincode('./hyperledger.chaincode', 'vending', version, 'node');
+        let response = await client.autoUpgradeChaincode('./hyperledger.chaincode', 'beanchain', version, 'node');
         console.log(response);
     }
     catch(e) {

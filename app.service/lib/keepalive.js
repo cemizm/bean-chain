@@ -1,4 +1,4 @@
-const Client = require('./vending.client');
+const Client = require('./beanchain.client');
 
 module.exports = async function(config) {
     const identity = {
@@ -11,7 +11,7 @@ module.exports = async function(config) {
     let client = await Client.initWithIdentity(config, identity);
 
     setInterval(async () => {
-        await client.getAccountBySerial("asd");
+        await client.account_get("asd");
     }, 25000);
   }
   

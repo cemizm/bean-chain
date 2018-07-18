@@ -15,8 +15,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(auth(config));
 
-app.use('/account', require("./routes/account"));
 app.use('/transaction', require("./routes/transaction"));
+app.use('/account', require("./routes/account"));
+app.use('/manager', require("./routes/manager"));
 
 var port = process.env.PORT || 8080;
 

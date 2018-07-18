@@ -1,11 +1,11 @@
 var router = require('express').Router();
 
-router.get('/cardnumber/:cardnumber', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
-    if(!req.params.cardnumber)
-      throw new Error("Invalid cardnumber");
+    if(!req.params.id)
+      throw new Error("Invalid account id");
 
-    let account = await req.client.getAccountByCardnumber(req.params.cardnumber);
+    let account = await req.client.account_get(req.params.id);
     if(account == null)
       throw new Error("No account");
 
@@ -15,12 +15,12 @@ router.get('/cardnumber/:cardnumber', async (req, res) => {
   }
 });
 
-router.get('/serial/:serial', async (req, res) => {
+router.get('/:id/transactions', async (req, res) => {
   try {
-    if(!req.params.serial)
-      throw new Error("Invalid serial");
+    if(!req.params.id)
+      throw new Error("Invalid account id");
 
-    let account = await req.client.getAccountBySerial(req.params.serial);
+    let account = await req.client.account_getTransactions(req.params.id);
     if(account == null)
       throw new Error("No account");
 
@@ -30,27 +30,13 @@ router.get('/serial/:serial', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.post('/:id', async (req, res) => {
   try {
-    let accounts = await req.client.getAccounts();
-    res.send(accounts);
-  } catch(err){
-    res.status(500).send(err);
-  }
-});
+    if(!req.params.id)
+      throw new Error("Invalid account id");
 
-router.post('/', async (req, res) => {
-  try {
-    await req.client.addAccount(req.body);
-    res.send();
-  } catch(err){
-    res.status(500).send(err);
-  }
-});
-
-router.put('/', async (req, res) => {
-  try {
-    await req.client.updateAccount(req.body);
+    await req.client.account_post(req.params.id);
+    
     res.send();
   } catch(err){
     res.status(500).send(err);

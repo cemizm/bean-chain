@@ -1,0 +1,36 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px" >
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title><h2 class="mat-h2">Transactions</h2></mat-card-title>
+      <mat-card-subtitle>Month: {{ today | date: 'MMMM'}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content style="height: 400px">
+        <ngx-charts-bar-vertical
+        [results]="transactions"
+        [scheme]="colorScheme"
+        [xAxis]="true"
+        [yAxis]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [yAxisLabel]="'Transactions'"
+        [xAxisLabel]="'Day of month'">
+      </ngx-charts-bar-vertical>
+    </mat-card-content>
+  </mat-card>
+  <mat-toolbar color="primary">
+    <span>Vending Machines</span>
+    <span class="toolbar-filler"></span>
+    <button mat-mini-fab><mat-icon>add</mat-icon></button>
+  </mat-toolbar>
+  <div fxLayout="row wrap" fxLayoutGap="10px">
+      <mat-card class="machine" *ngFor="let machine of machines" (click)="onSelect(machine)">
+        <mat-card-header>
+          <mat-card-title>{{machine.name}}</mat-card-title>
+          <mat-card-subtitle>{{machine.type}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content style="height: 150px">
+          <ngx-charts-bar-vertical [results]="machine.data" [scheme]="colorScheme" [xAxis]="true" [yAxis]="true"></ngx-charts-bar-vertical>
+        </mat-card-content>
+      </mat-card>
+  </div>
+</div>

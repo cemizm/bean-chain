@@ -3,7 +3,9 @@ const shim = require('fabric-shim');
 const util = require('util');
 
 const jsonstate = require('./utils/jsonstate')
-const VMLedger = require('./vending')
+const BCAccount = require('./beanchain.account');
+const BCManager = require('./beanchain.manager');
+const BCTransaction = require('./beanchain.transaction');
 
 let Chaincode = class {
 
@@ -19,7 +21,9 @@ let Chaincode = class {
     let identity = new shim.ClientIdentity(stub)
     let state = new jsonstate(stub);
 
-    let ledger = new VMLedger(identity, state)
+    let bc_account = new BCAccount(identity, state)
+    let bc_manager = new BCManager(identity, state)
+    let bc_transaction = new BCTransaction(identity, state)
 
     console.info(`function: ${args.fcn}`)
     console.info(`params: ${args.params}`)
@@ -30,54 +34,63 @@ let Chaincode = class {
       let payload = null;
 
       switch(args.fcn) {
-        case 'account.getByCardnumber':
+
+        case 'account.get':
           if(!args.params || args.params.length != 1)
             throw new Error('insufficient parameters');
-          payload = await ledger.getAccountByCardnumber(args.params[0])
+            
+          payload = await bc_account.get(args.params[0]);
           break;
-        case 'account.getBySerial':
+        case 'account.getTransactions':
           if(!args.params || args.params.length != 1)
             throw new Error('insufficient parameters');
-          payload = await ledger.getAccountBySerial(args.params[0])
-          break;
 
-        case 'account.getall':
-          payload = await ledger.getAccounts();
+          payload = await bc_account.getTransactions(args.params[0]);
           break;
-
-        case 'account.add':
+        case 'account.post':
           if(!args.params || args.params.length != 1)
             throw new Error('insufficient parameters');
-          
-          info = JSON.parse(args.params[0]);
 
-          payload = await ledger.createAccount(info);
+          payload = await bc_account.post(args.params[0]);
           break;
 
-        case 'account.update':
+
+        case 'manager.get':
+          payload = await bc_manager.get();
+          break;
+        case 'manager.getTransactions':
+          payload = await bc_manager.getTransactions();
+          break;
+        case 'manager.post':
+          payload = await bc_manager.post();
+          break;
+        case 'manager.put':
           if(!args.params || args.params.length != 1)
             throw new Error('insufficient parameters');
-          
-          info = JSON.parse(args.params[0]);
-
-          payload = await ledger.updateAccount(info);
-          break;
         
-        case 'transaction.get':
-          if(!args.params || args.params.length != 1)
-            throw new Error('insufficient parameters');
-          
-          payload = await ledger.getTransactions(args.params[0]);
+          info = JSON.parse(args.params[0]);
+
+          payload = await bc_manager.put(info);
           break;
-        
-        case 'transaction.add':
+
+
+        case 'transaction.redeem':
           if(!args.params || args.params.length != 1)
             throw new Error('insufficient parameters');
           
           info = JSON.parse(args.params[0]);
 
-          payload = await ledger.addTransaction(info);
+          payload = await bc_transaction.redeem(info.amount, info.account, info.note);
           break;
+        case 'transaction.recharge':
+          if(!args.params || args.params.length != 1)
+            throw new Error('insufficient parameters');
+          
+          info = JSON.parse(args.params[0]);
+            
+          payload = await bc_transaction.recharge(info.amount, info.account, info.note);
+          break;
+
 
         default:
           throw new Error('unknown function');

@@ -1,21 +1,17 @@
 var router = require('express').Router();
 
-router.get('/:serial', async (req, res) => {
+router.post('/redeem', async (req, res) => {
   try {
-    if(!req.params.serial)
-      throw new Error("Invalid serial");
-
-    let transactions = await req.client.getTransaction(req.params.serial);
-    res.send(transactions);
+    await req.client.transaction_redeem(req.body);
+    res.send();
   } catch(err){
     res.status(500).send(err);
   }
 });
 
-
-router.post('/', async (req, res) => {
+router.post('/recharge', async (req, res) => {
   try {
-    await req.client.addTransaction(req.body);
+    await req.client.transaction_recharge(req.body);
     res.send();
   } catch(err){
     res.status(500).send(err);

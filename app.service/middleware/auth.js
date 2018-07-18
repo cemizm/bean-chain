@@ -1,4 +1,4 @@
-const Client = require('../lib/vending.client');
+const Client = require('../lib/beanchain.client');
 const atob = require('atob');
 
 module.exports = function(config) {

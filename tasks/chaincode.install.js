@@ -13,7 +13,7 @@ gulp.task('chaincode.install', async (cb) =>{
     let client = await Hyperledger.initFromConfig(config);
 
     try {
-        let response = await client.autoInstallChaincode('./hyperledger.chaincode', 'vending', 'V1', 'node');
+        let response = await client.autoInstallChaincode('./hyperledger.chaincode', 'beanchain', 'V1', 'node');
         console.log(response);
     }
     catch(e) {

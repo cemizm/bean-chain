@@ -48,10 +48,10 @@ localityName_default            = Bielefeld
 organizationName                = Organization
 organizationName_default        = mainorg.bean-chain.org
 
-organizationalUnitName          = Machine, Manager, User
+organizationalUnitName          = Machine, Manager, Payment, Mobile
 organizationalUnitName_default  = Machine
 
-commonName                      = Benutzername oder Geräteid
+commonName                      = Benutzername oder Gerätename
 commonName_default              = Cem Basoglu
 
 [ v3_ca ]

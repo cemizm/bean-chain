@@ -1,0 +1,17 @@
+{
+  "name": "app.machine",
+  "version": "1.0.0",
+  "description": "application for the vending machine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "noble": "^1.9.1",
+    "node-beacon-scanner": "^0.1.0",
+    "serialport": "^6.2.1"
+  }
+}
