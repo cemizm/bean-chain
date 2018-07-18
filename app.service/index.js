@@ -8,7 +8,7 @@ var keepalive = require('./lib/keepalive')
 
 let config = process.env.PROD ? network.production : network.development;
 
-keepalive(config);
+//keepalive(config);
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,6 +19,6 @@ app.use('/transaction', require("./routes/transaction"));
 app.use('/account', require("./routes/account"));
 app.use('/manager', require("./routes/manager"));
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8000;
 
 app.listen(port);

@@ -25,13 +25,13 @@ module.exports = {
     production: {
         channel: "mychannel",
         orderers: [
-           "grpc://health-ledger.westeurope.cloudapp.azure.com:7050"
+           "grpc://orderer.health-ledger.de:7050"
         ],
         peers: [
-           "grpc://health-ledger.westeurope.cloudapp.azure.com:7051"
+           "grpc://peer0.mainorg.health-ledger.de:7051"
         ],
         hubs: [
-           "grpc://health-ledger.westeurope.cloudapp.azure.com:7053"
+           "grpc://peer0.mainorg.health-ledger.de:7053"
         ],
         identity: {
            username: "admin",

@@ -1,4 +1,4 @@
-const Hyperledger = require('core.hyperledger');
+const Hyperledger = require('./hyperledger.client');
 
 const chaincodeId = 'beanchain';
 

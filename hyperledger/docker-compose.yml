@@ -90,5 +90,17 @@ services:
     volumes:
         - /var/run/:/host/var/run/
         - ./config:/etc/hyperledger/config
+        - ../hyperledger.chaincode/:/etc/hyperledger/chaincode
+    networks:
+        - basic
+  
+  app.service:
+    container_name: app.service
+    build: ../app.service/
+    environment:
+      - PROD=true
+    ports:
+      - 8000:8000
+    command: node index.js
     networks:
         - basic

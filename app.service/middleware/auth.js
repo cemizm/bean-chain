@@ -16,7 +16,6 @@ module.exports = function(config) {
       req.client = await Client.initWithIdentity(config, req.identity);
 
     } catch(err) {
-      console.log(err)
       return res.status(401).send("no authentication headers");
     }
 
