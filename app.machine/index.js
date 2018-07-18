@@ -3,7 +3,7 @@ const BeaconScanner = require('./lib/beacon.scanner');
 const Beanchain = require('./lib/beanchain.client');
 
 const config = {
-    host: "http://localhost:8080",
+    host: "http://health-ledger.westeurope.cloudapp.azure.com:8000",
     identity: {
         username:"machine",
         mspid:"MainOrgMSP",
