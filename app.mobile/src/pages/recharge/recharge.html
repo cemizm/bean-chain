@@ -1,0 +1,53 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Recharge</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-list>
+        <ion-item detail-push (click)="fakeProvider()">
+          <ion-thumbnail item-start>
+            <img src="assets/payment/fake.png">
+          </ion-thumbnail>
+          <h2>Fake Payment Provider</h2>
+          <h3>!! Only for PoC !!</h3>
+          <p>Make a fake payment for proof of concept</p>
+        </ion-item>
+        <ion-item detail-push style="opacity: 0.4;">
+          <ion-thumbnail item-start>
+            <img src="assets/payment/iota.png">
+          </ion-thumbnail>
+          <h2>IOTA Payment Provider</h2>
+          <h3>The Next Generation of DLT</h3>
+          <p>Recharge your account by using IOTAs</p>
+        </ion-item>
+        <ion-item detail-push style="opacity: 0.4;">
+          <ion-thumbnail item-start>
+            <img src="assets/payment/ethereum.png">
+          </ion-thumbnail>
+          <h2>Ethereum Payment Provider</h2>
+          <h3>A decentralized platform for applications</h3>
+          <p>Use Ethereum Smart Contracts for recharging</p>
+        </ion-item>
+        <ion-item detail-push style="opacity: 0.4;">
+          <ion-thumbnail item-start>
+            <img src="assets/payment/bitcoin.png">
+          </ion-thumbnail>
+          <h2>Bitcoin Payment Provider</h2>
+          <h3>The first real dezentralized currency</h3>
+          <p>We also accept bitcoins as payment method</p>
+        </ion-item>
+        <ion-item detail-push style="opacity: 0.4;">
+          <ion-thumbnail item-start>
+            <img src="assets/payment/paypal.png">
+          </ion-thumbnail>
+          <h2>Paypal Payment Provider</h2>
+          <h3>Use Paypal if you prefer centralized payment method</h3>
+          <p>Recharge your account by using Paypal</p>
+        </ion-item>
+      </ion-list>
+</ion-content>
