@@ -148,8 +148,7 @@ module.exports = class CCIParser {
 
         //console.log("%s Request:  %o (0x%s)", new Date().getTime(), buffer, calcCheck.toString(16));
 
-        if(checksum !== calcCheck) 
-            return this.port.write([Responses.NACK]); // invalid checkum
+        this.port.write([checksum !== calcCheck ? Responses.NACK : Responses.ACK]); // invalid checkum
         
         let result = null;
         switch(type){
@@ -166,7 +165,7 @@ module.exports = class CCIParser {
                 result = this.handleVend(payload);
                 break;
             case TelegramTypes.Inquiry:
-                result = this.handleInquiry(payload);
+                result = await this.handleInquiry(payload);
                 break;
             case TelegramTypes.Price:
                 result = this.handlePrice(payload);
@@ -176,7 +175,7 @@ module.exports = class CCIParser {
                 return console.log("Unknown Type: " + type.toString(16));
         }
     
-        this.port.write([result.status ? Responses.ACK : Responses.NACK]);
+        //this.port.write([result.status ? Responses.ACK : Responses.NACK]);
     
         if(result.status && result.data) {
             this.handleResponse(type, result.data);
