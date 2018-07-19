@@ -1,0 +1,19 @@
+[Unit]
+Description=Beanchain coffe interface
+After=bluetooth.target
+Requires=bluetooth.target
+
+[Service]
+ExecStart=/usr/bin/node /home/pi/bean-chain/app.machine/index.js
+# Required on some systems
+WorkingDirectory=/home/pi/bean-chain/app.machine
+Restart=always
+# Restart service after 10 seconds if node service crashes
+RestartSec=10
+# Output to syslog
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=beanchain
+
+[Install]
+WantedBy=multi-user.target
