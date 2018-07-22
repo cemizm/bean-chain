@@ -1,4 +1,4 @@
-set -e
+cd hyperledger/
 
 # Shut down the Docker containers for the system tests.
 docker-compose -f docker-compose.yml kill && docker-compose -f docker-compose.yml down

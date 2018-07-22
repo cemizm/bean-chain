@@ -1,4 +1,4 @@
-set -ev
+cd hyperledger/
 
 docker-compose -f docker-compose.yml down
 docker-compose -f docker-compose.yml up -d orderer.health-ledger.de peer0.mainorg.health-ledger.de couchdb
