@@ -4,7 +4,7 @@
       <mat-card-title><h2 class="mat-h2">Transactions</h2></mat-card-title>
       <mat-card-subtitle>Month: {{ today | date: 'MMMM'}}</mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content style="height: 400px">
+    <mat-card-content style="height: 350px">
         <ngx-charts-bar-vertical
         [results]="transactions"
         [scheme]="colorScheme"
@@ -22,8 +22,8 @@
     <span class="toolbar-filler"></span>
     <button mat-mini-fab><mat-icon>add</mat-icon></button>
   </mat-toolbar>
-  <div fxLayout="row wrap" fxLayoutGap="10px">
-      <mat-card class="machine" *ngFor="let machine of machines" (click)="onSelect(machine)">
+  <div fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="10px">
+      <mat-card class="machine" fxFlex="1 1 calc(25% - 30px)" fxFlex.lt-lg="1 1 calc(33% - 30px)" fxFlex.lt-md="1 1 calc(50% - 20px)" fxFlex.lt-sm="1 1 100%" *ngFor="let machine of machines" (click)="onSelect(machine)">
         <mat-card-header>
           <mat-card-title>{{machine.name}}</mat-card-title>
           <mat-card-subtitle>{{machine.type}}</mat-card-subtitle>
