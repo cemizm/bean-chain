@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BeanchainService } from '../../services/beanchain.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-overview',
@@ -17,7 +18,7 @@ export class OverviewComponent implements OnInit {
 
   machines: any[];
 
-  constructor(private service: BeanchainService) { }
+  constructor(private service: BeanchainService, private router: Router) { }
 
   ngOnInit() {
 
@@ -80,6 +81,7 @@ export class OverviewComponent implements OnInit {
           }
 
           machines.push({
+            id: m.id,
             name: m.name,
             type: m.location,
             data: data
@@ -93,6 +95,6 @@ export class OverviewComponent implements OnInit {
   }
 
   onSelect(machine) {
-    console.log(machine);
+    this.router.navigate(['machine', machine.id]);
   }
 }
